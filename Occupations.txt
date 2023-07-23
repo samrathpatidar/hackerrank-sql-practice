@@ -1,0 +1,19 @@
+Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. The output column headers should be Doctor, Professor, Singer, and Actor, respectively.
+Note: Print NULL when there are no more names corresponding to an occupation.
+Input Format
+The OCCUPATIONS table is described as follows:
+
+
+SELECT max(doctor), max(professor), max(singer), max(actor) 
+FROM(
+    SELECT 
+        ROW_NUMBER() OVER(PARTITION BY occupation ORDER BY name) as rownumber,
+        CASE WHEN occupation='Doctor' THEN name END as Doctor,
+        CASE WHEN occupation='Professor' THEN name END as Professor,
+        CASE WHEN occupation='Singer' THEN name END as Singer,
+        CASE WHEN occupation='Actor' THEN name END as Actor
+
+    FROM occupations        
+    order by name
+) as tmp
+group by rownumber
