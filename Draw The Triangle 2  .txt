@@ -1,0 +1,20 @@
+Draw The Triangle 2
+
+P(R) represents a pattern drawn by Julia in R rows. The following pattern represents P(5):
+* 
+* * 
+* * * 
+* * * * 
+* * * * *
+Write a query to print the pattern P(20).
+
+
+
+
+with recursive cte as 
+(
+    select 1 as n, cast('*' as char(39)) as str
+    union
+    select n+1, concat(str,' ','*') as str from cte where n<20
+)
+select str from cte;
